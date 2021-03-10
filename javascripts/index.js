@@ -2,6 +2,19 @@ function main() {
   return document.getElementById("main");
 }
 
+function titleInput() {
+  return document.getElementById('title')
+}
+
+function descriptionInput() {
+  return document.getElementById('descritpion')
+}
+
+function resetFormInputs() {
+  titleInput().innerHTML = "";
+  descriptionInput().innerHTML = "";
+}
+
 function resetMain() {
   main().innerHTML = "";
 }
@@ -22,3 +35,12 @@ function projectFormTemplate() {
     </form>
   `;
 }
+
+function renderPForm() {
+  resetMain();
+  main().innerHTML = projectFormTemplate();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  renderPForm();
+})
