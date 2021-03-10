@@ -1,18 +1,24 @@
+const projects = [];
+
 function main() {
   return document.getElementById("main");
 }
 
 function titleInput() {
-  return document.getElementById('title')
+  return document.getElementById('title');
 }
 
 function descriptionInput() {
-  return document.getElementById('descritpion')
+  return document.getElementById('description');
+}
+
+function pForm() {
+  return document.getElementById("project_form");
 }
 
 function resetFormInputs() {
-  titleInput().innerHTML = "";
-  descriptionInput().innerHTML = "";
+  titleInput().value = "";
+  descriptionInput().value = "";
 }
 
 function resetMain() {
@@ -36,9 +42,22 @@ function projectFormTemplate() {
   `;
 }
 
+
 function renderPForm() {
   resetMain();
   main().innerHTML = projectFormTemplate();
+  pForm().addEventListener("submit", submitPForm);
+}
+
+function submitPForm(e) {
+  e.preventDefault();
+
+  projects.push ({
+    title: titleInput().value,
+    description: descriptionInput().value,
+  });
+
+  resetFormInputs();
 }
 
 document.addEventListener("DOMContentLoaded", function() {
