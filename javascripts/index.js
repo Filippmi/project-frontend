@@ -121,25 +121,19 @@ function editProject(e) {
   renderEditForm(project);
 }
 
-function deleteProject(e) {
+async function deleteProject(e) {
   e.preventDefault();
-  
   let id = e.target.dataset.id;
 
-  fetch(baseUrl + "/projects/" + id, {
+  const resp = await fetch(baseUrl + "/projects/" + id, {
     method: "DELETE"
   })
-  .then(function(resp) {
-    return resp.json();
-  })
-  .then(function(data) {
+  const data = await resp.json();
 
-    projects = projects.filter(function(project) {
-      return project.id !== data.id;
-    })
-    renderProjects();
-    alert("Project was deleted!")
-  });
+  projects = projects.filter(function(project) {
+    return project.id !== data.id;
+  })
+  renderProjects();
 }
 
 function renderPForm() {
