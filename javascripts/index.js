@@ -102,12 +102,28 @@ function renderProjects() {
 function submitPForm(e) {
   e.preventDefault();
 
-  projects.push ({
-    name: nameInput().value,
-    description: descriptionInput().value,
-  });
+  let strongParams = {
+    project: {
+      name: nameInput().value,
+      description: descriptionInput().value
+    }
+  }
+  fetch(baseUrl+"/projects", {
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(strongParams),
+    method: "POST"
+  })
+    .then( function(resp) {
+      return resp.json();
+    })
+    .then( function(project) {
+      projects.push(project)
+      renderProjects();
+    })
 
-  renderProjects();
 }
 
 function formLinkEvent() {
