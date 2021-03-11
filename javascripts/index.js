@@ -1,9 +1,4 @@
-const projects = [
-  {title: "Title 1", description: "Desc1"},
-  {title: "Title 2", description: "Desc2"},
-  {title: "Title 3", description: "Desc3"},
-  {title: "Title 4", description: "Desc4"},
-];
+const projects = [];
 
 function main() {
   return document.getElementById("main");
@@ -92,10 +87,10 @@ function submitPForm(e) {
     description: descriptionInput().value,
   });
 
-  resetFormInputs();
+  renderProjects();
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  // renderPForm();
-  renderProjects()
+  renderPForm();
+  // renderProjects();
 })
