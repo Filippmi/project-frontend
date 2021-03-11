@@ -1,4 +1,5 @@
-const projects = [];
+let projects = [];
+const baseUrl = "http://localhost:3000"
 
 function main() {
   return document.getElementById("main");
@@ -22,6 +23,17 @@ function pFormLink() {
 }
 function projectsLink() {
   return document.getElementById("my-projects")
+}
+
+// fetches to the backend
+function getProjects() {
+  fetch(baseUrl+'/projects')
+  .then(function(resp) {
+    return resp.json();
+  })
+  .then(function(data) {
+    projects = data
+  });
 }
 
 function resetFormInputs() {
@@ -115,6 +127,7 @@ function myProjectsLinkEvent() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  getProjects();
   formLinkEvent();
   myProjectsLinkEvent();
   // renderPForm();
