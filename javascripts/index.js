@@ -65,7 +65,7 @@ function projectFormTemplate() {
 function editFormTemplate(project) {
   return `
   <h3>Edit Project</h3>
-    <form id="project_form">
+    <form id="project_form" data-id="${project.id}">
       <div class="input-feild">
         <label for="name">Project Name</label>
         <input type="text" name="name" id="name" value="${project.name}"><br>
@@ -155,11 +155,44 @@ function renderPForm() {
 function renderEditForm(project) {
   resetMain();
   main().innerHTML = editFormTemplate(project);
-  // pForm().addEventListener("submit", submitPForm);
+  pForm().addEventListener("submit", submitEditForm);
+}
+
+function submitEditForm(e) {
+  e.preventDefault();
+
+  let strongParams = {
+    project: {
+      name: nameInput().value,
+      description: descriptionInput().value
+    }
+  }
+  const id = e.target.dataset.id;
+
+  fetch(baseUrl + "/projects/" + id, {
+    method: "PATCH",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(strongParams)
+  })
+  .then(function(resp) {
+    return resp.json();
+  })
+  .then(function(project) {
+    let p = projects.find(function(p) {
+      return p.id == project.id;
+    })
+    let idx = projects.indexOf(p);
+    projects[idx] = project;
+    alert(`${project.name} was edited`)
+    renderProjects();
+  })
 }
 
 function renderProjects() {
-  resetMain();
+  // resetMain();
   main().innerHTML = projectsTemp();
 
   projects.forEach( function(project) {
@@ -214,5 +247,5 @@ document.addEventListener("DOMContentLoaded", function() {
   getProjects();
   formLinkEvent();
   myProjectsLinkEvent();
-  // renderPForm();
+  renderPForm();
 })
