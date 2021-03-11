@@ -4,8 +4,8 @@ function main() {
   return document.getElementById("main");
 }
 
-function titleInput() {
-  return document.getElementById('title');
+function nameInput() {
+  return document.getElementById('name');
 }
 
 function descriptionInput() {
@@ -14,6 +14,14 @@ function descriptionInput() {
 
 function pForm() {
   return document.getElementById("project_form");
+}
+
+// functions for Links
+function pFormLink() {
+  return document.getElementById("pform-link")
+}
+function projectsLink() {
+  return document.getElementById("my-projects")
 }
 
 function resetFormInputs() {
@@ -30,8 +38,8 @@ function projectFormTemplate() {
   <h3>Create Project</h3>
     <form id="project_form">
       <div class="input-feild">
-        <label for="title">Project title</label>
-        <input type="text" name="title" id="title"><br>
+        <label for="name">Project Name</label>
+        <input type="text" name="name" id="name"><br>
       </div>
       <div class="input-feild">
         <label for="description">Description</label><br>
@@ -55,7 +63,7 @@ function renderProject(project) {
   const div = document.createElement("div");
 
   const h4 = document.createElement("h4");
-  h4.innerText = project.title;
+  h4.innerText = project.name;
 
   const p = document.createElement("p");
   p.innerText = project.description;
@@ -83,14 +91,31 @@ function submitPForm(e) {
   e.preventDefault();
 
   projects.push ({
-    title: titleInput().value,
+    name: nameInput().value,
     description: descriptionInput().value,
   });
 
   renderProjects();
 }
 
+function formLinkEvent() {
+  pFormLink().addEventListener("click", function(e) {
+    e.preventDefault();
+
+    renderPForm();
+  })
+}
+
+function myProjectsLinkEvent() {
+  projectsLink().addEventListener("click", function(e) {
+    e.preventDefault();
+
+    renderProjects();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function() {
-  renderPForm();
-  // renderProjects();
+  formLinkEvent();
+  myProjectsLinkEvent();
+  // renderPForm();
 })
