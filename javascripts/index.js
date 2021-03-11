@@ -1,4 +1,9 @@
-const projects = [];
+const projects = [
+  {title: "Title 1", description: "Desc1"},
+  {title: "Title 2", description: "Desc2"},
+  {title: "Title 3", description: "Desc3"},
+  {title: "Title 4", description: "Desc4"},
+];
 
 function main() {
   return document.getElementById("main");
@@ -42,11 +47,41 @@ function projectFormTemplate() {
   `;
 }
 
+function projectsTemp() {
+  return `
+  <h3>My Projects</h3>
+  <div id="projects">
+  </div>
+  `
+}
+
+function renderProject(project) {
+  const projectsDiv = document.getElementById("projects");
+  const div = document.createElement("div");
+
+  const h4 = document.createElement("h4");
+  h4.innerText = project.title;
+
+  const p = document.createElement("p");
+  p.innerText = project.description;
+
+  div.append(h4, p)
+  projectsDiv.appendChild(div);
+}
 
 function renderPForm() {
   resetMain();
   main().innerHTML = projectFormTemplate();
   pForm().addEventListener("submit", submitPForm);
+}
+
+function renderProjects() {
+  resetMain();
+  main().innerHTML = projectsTemp();
+
+  projects.forEach( function(project) {
+    renderProject(project)
+  })
 }
 
 function submitPForm(e) {
@@ -61,5 +96,6 @@ function submitPForm(e) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  renderPForm();
+  // renderPForm();
+  renderProjects()
 })
