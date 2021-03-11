@@ -62,6 +62,23 @@ function projectFormTemplate() {
   `;
 }
 
+function editFormTemplate(project) {
+  return `
+  <h3>Edit Project</h3>
+    <form id="project_form">
+      <div class="input-feild">
+        <label for="name">Project Name</label>
+        <input type="text" name="name" id="name" value="${project.name}"><br>
+      </div>
+      <div class="input-feild">
+        <label for="description">Description</label><br>
+        <textarea name="description" id="description" cols="30" rows="5">${project.description}</textarea>
+      </div>
+      <input type="submit" value="Edit">
+    </form>
+  `;
+}
+
 function projectsTemp() {
   return `
   <h3>My Projects</h3>
@@ -76,19 +93,36 @@ function renderProject(project) {
   const h4 = document.createElement("h4");
   const p = document.createElement("p");
   const deleteLink = document.createElement("a")
+  const editLink = document.createElement("a")
+
+  editLink.dataset.id = project.id
+  editLink.setAttribute("href", "#")
+  editLink.innerText = "Edit"
   
   deleteLink.dataset.id = project.id
   deleteLink.setAttribute("href", "#")
   deleteLink.innerText = "Delete"
 
-  deleteLink.addEventListener("click", deleteProject)
+  editLink.addEventListener("click", editProject);
+  deleteLink.addEventListener("click", deleteProject);
 
   h4.innerText = `Project Name: ${project.name}`;
   p.innerText = `Short description: ${project.description}`;
 
-  div.append(h4, p, deleteLink);
+  div.append(h4, p, editLink, deleteLink);
   projectsDiv.appendChild(div);
 
+}
+
+function editProject(e) {
+  e.preventDefault();
+  const id = e.target.dataset.id;
+
+  const project = projects.find(function(project) {
+    return project.id == id;
+  })
+
+  renderEditForm(project);
 }
 
 function deleteProject(e) {
@@ -116,6 +150,12 @@ function renderPForm() {
   resetMain();
   main().innerHTML = projectFormTemplate();
   pForm().addEventListener("submit", submitPForm);
+}
+
+function renderEditForm(project) {
+  resetMain();
+  main().innerHTML = editFormTemplate(project);
+  // pForm().addEventListener("submit", submitPForm);
 }
 
 function renderProjects() {
