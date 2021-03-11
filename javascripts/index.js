@@ -26,14 +26,10 @@ function projectsLink() {
 }
 
 // fetches to the backend
-function getProjects() {
-  fetch(baseUrl+'/projects')
-  .then(function(resp) {
-    return resp.json();
-  })
-  .then(function(data) {
-    projects = data
-  });
+async function getProjects() {
+  const resp = await fetch(baseUrl + "/projects")
+  const data = await resp.json();
+  projects = data;
 }
 
 function resetFormInputs() {
@@ -247,5 +243,5 @@ document.addEventListener("DOMContentLoaded", function() {
   getProjects();
   formLinkEvent();
   myProjectsLinkEvent();
-  renderPForm();
+  // renderPForm();
 })
