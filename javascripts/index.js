@@ -63,10 +63,10 @@ function renderProject(project) {
   const div = document.createElement("div");
 
   const h4 = document.createElement("h4");
-  h4.innerText = project.name;
+  h4.innerText = `Project Name: ${project.name}`;
 
   const p = document.createElement("p");
-  p.innerText = project.description;
+  p.innerText = `Short description: ${project.description}`;
 
   div.append(h4, p)
   projectsDiv.appendChild(div);
