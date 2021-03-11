@@ -73,15 +73,43 @@ function projectsTemp() {
 function renderProject(project) {
   const projectsDiv = document.getElementById("projects");
   const div = document.createElement("div");
-
   const h4 = document.createElement("h4");
-  h4.innerText = `Project Name: ${project.name}`;
-
   const p = document.createElement("p");
+  const deleteLink = document.createElement("a")
+  
+  deleteLink.dataset.id = project.id
+  deleteLink.setAttribute("href", "#")
+  deleteLink.innerText = "Delete"
+
+  deleteLink.addEventListener("click", deleteProject)
+
+  h4.innerText = `Project Name: ${project.name}`;
   p.innerText = `Short description: ${project.description}`;
 
-  div.append(h4, p)
+  div.append(h4, p, deleteLink);
   projectsDiv.appendChild(div);
+
+}
+
+function deleteProject(e) {
+  e.preventDefault();
+  
+  let id = e.target.dataset.id;
+
+  fetch(baseUrl + "/projects/" + id, {
+    method: "DELETE"
+  })
+  .then(function(resp) {
+    return resp.json();
+  })
+  .then(function(data) {
+
+    projects = projects.filter(function(project) {
+      return project.id !== data.id;
+    })
+    renderProjects();
+    alert("Project was deleted!")
+  });
 }
 
 function renderPForm() {
