@@ -26,10 +26,14 @@ function projectsLink() {
 }
 
 // fetches to the backend
-async function getProjects() {
-  const resp = await fetch(baseUrl + "/projects")
-  const data = await resp.json();
-  projects = data;
+function getProjects() {
+  fetch(baseUrl+'/projects')
+  .then(function(resp) {
+    return resp.json();
+  })
+  .then(function(data) {
+    projects = data
+  });
 }
 
 function resetFormInputs() {
@@ -121,19 +125,25 @@ function editProject(e) {
   renderEditForm(project);
 }
 
-async function deleteProject(e) {
+function deleteProject(e) {
   e.preventDefault();
+  
   let id = e.target.dataset.id;
 
-  const resp = await fetch(baseUrl + "/projects/" + id, {
+  fetch(baseUrl + "/projects/" + id, {
     method: "DELETE"
   })
-  const data = await resp.json();
-
-  projects = projects.filter(function(project) {
-    return project.id !== data.id;
+  .then(function(resp) {
+    return resp.json();
   })
-  renderProjects();
+  .then(function(data) {
+
+    projects = projects.filter(function(project) {
+      return project.id !== data.id;
+    })
+    renderProjects();
+    alert("Project was deleted!")
+  });
 }
 
 function renderPForm() {
