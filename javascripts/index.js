@@ -142,7 +142,6 @@ function deleteProject(e) {
       return project.id !== data.id;
     })
     renderProjects();
-    alert("Project was deleted!")
   });
 }
 
