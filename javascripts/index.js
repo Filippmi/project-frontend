@@ -36,9 +36,6 @@ function allLeads() {
 function leadNameInput() {
   return document.getElementById("lead-name");
 }
-function leadEmailInput() {
-  return document.getElementById("lead-email");
-}
 function leadForm() {
   return document.getElementById("lead-form")
 }
@@ -72,11 +69,6 @@ function resetFormInputs() {
   descriptionInput().value = "";
 }
 
-function resetLeadInputs() {
-  leadNameInput().value = "";
-  leadEmailInput().value = "";
-}
-
 function resetMain() {
   main().innerHTML = "";
 }
@@ -89,16 +81,9 @@ function projectFormTemplate() {
       <label for="name">Project Name</label>
       <input type="text" name="name" id="name"><br>
     </div>
-    <div id="selection">
-      <label for="lead">Team Lead</label>
-      <select>
-        <option selected disabled hidden>Select</option>
-          <option>lead names 1</option>
-          <option>lead names 2</option>
-          <option>lead names 3</option>
-          <option>lead names 4</option>
-          <option>lead names 5</option>
-      </select>
+    <div class="input-feild">
+      <label for="lead-name">Team Lead </label>
+      <input type="text" name="lead-name" id="lead-name"><br>
     </div>
     <div class="input-feild">
       <label for="description">Project Description</label><br>
@@ -147,8 +132,7 @@ function submitLeadForm(e) {
 
   let strongParams = {
     lead: {
-      name: leadNameInput().value,
-      email: leadEmailInput().value
+      name: leadNameInput().value
     }
   }
   fetch(baseUrl+"/leads", {
@@ -183,10 +167,6 @@ function leadFormTemplate() {
       <label for="lead-name">Name:</label>
       <input type="text" name="lead-name" id="lead-name">
     </div>
-    <div class="input-field">
-      <label for="lead-email">Email:</label>
-      <input type="text" name="lead-email" id="lead-email">
-    </div>
     <input type="submit" value="Create">
   </form>
   `
@@ -196,12 +176,10 @@ function renderLead(lead) {
   const leadDiv = document.getElementById("leads");
   const div = document.createElement("div");
   const h4 = document.createElement("h4");
-  const p = document.createElement("p");
 
   h4.innerText = `Lead: ${lead.name}`;
-  p.innerText = `Lead Email: ${lead.email}`;
 
-  div.append(h4, p);
+  div.appendChild(h4);
   leadDiv.appendChild(div);
 }
     
@@ -210,8 +188,7 @@ function renderProject(project) {
   const div = document.createElement("div");
   const h4 = document.createElement("h4");
   const p = document.createElement("p");
-  // const leadName = document.createElement("p")
-  // const leadEmail = document.createElement("p")
+  const leadName = document.createElement("p")
   const deleteLink = document.createElement("a")
   const editLink = document.createElement("a")
 
@@ -227,11 +204,10 @@ function renderProject(project) {
   deleteLink.addEventListener("click", deleteProject);
 
   h4.innerText = `Project Name: ${project.name}`;
-  // leadName.innerText = `Lead: ${project.lead.name}`;
-  // leadEmail.innerText = `Lead Email: ${project.lead.email}`;
+  leadName.innerText = `Team Lead: ${project.lead.name}`;
   p.innerText = `Short description: ${project.description}`;
 
-  div.append(h4, p, editLink, deleteLink);
+  div.append(h4, leadName, p, editLink, deleteLink);
   projectsDiv.appendChild(div);
 
 }
@@ -333,6 +309,7 @@ function submitPForm(e) {
     project: {
       name: nameInput().value,
       description: descriptionInput().value,
+      lead_attributes: leadNameInput().value
     }
   }
   fetch(baseUrl+"/projects", {
