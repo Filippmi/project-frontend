@@ -91,7 +91,7 @@ function projectFormTemplate() {
     </div>
     <div id="selection">
       <label for="lead">Team Lead</label>
-      <select default="select">
+      <select>
         <option selected disabled hidden>Select</option>
           <option>lead names 1</option>
           <option>lead names 2</option>
@@ -281,10 +281,10 @@ function renderPForm() {
 function renderEditForm(project) {
   resetMain();
   main().innerHTML = editFormTemplate(project);
-  pForm().addEventListener("submit", submitEditForm);
+  pForm().addEventListener("submit", submitEditProjectForm);
 }
 
-function submitEditForm(e) {
+function submitEditProjectForm(e) {
   e.preventDefault();
 
   let strongParams = {
