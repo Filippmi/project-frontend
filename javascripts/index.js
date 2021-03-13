@@ -25,12 +25,6 @@ function pFormLink() {
 function projectsLink() {
   return document.getElementById("my-projects");
 }
-function newLeadLink() {
-  return document.getElementById("lead-form-link")
-}
-function allLeads() {
-  return document.getElementById("all-leads-link")
-}
 
 // Lead functions
 function leadNameInput() {
@@ -51,16 +45,6 @@ function getProjects() {
   })
   .then(function(data) {
     projects = data
-  });
-}
-
-function getLeads() {
-  fetch(baseUrl+'/leads')
-  .then(function(resp) {
-    return resp.json();
-  })
-  .then(function(data) {
-    leads = data
   });
 }
 
@@ -117,70 +101,6 @@ function projectsTemp() {
   <div id="projects">
   </div>
   `
-}
-
-function leadsTemp() {
-  return `
-  <h3>Team Leads</h3>
-  <div id="leads">
-  </div>
-  `
-}
-
-function submitLeadForm(e) {
-  e.preventDefault();
-
-  let strongParams = {
-    lead: {
-      name: leadNameInput().value
-    }
-  }
-  fetch(baseUrl+"/leads", {
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(strongParams),
-    method: "POST"
-  })
-  .then( function(resp) {
-    return resp.json();
-  })
-  .then( function(lead) {
-    leads.push(lead)
-    renderLeads();
-  })
-}
-
-function renderLeads() {
-  main().innerHTML = leadsTemp();
-  leads.forEach( function(lead) {
-    renderLead(lead)
-  })
-}
-
-function leadFormTemplate() {
-  return `
-  <h3>Create a Team Lead</h3>
-  <form id="lead-form">
-    <div class="input-field">
-      <label for="lead-name">Name:</label>
-      <input type="text" name="lead-name" id="lead-name">
-    </div>
-    <input type="submit" value="Create">
-  </form>
-  `
-}
-
-function renderLead(lead) {
-  const leadDiv = document.getElementById("leads");
-  const div = document.createElement("div");
-  const h4 = document.createElement("h4");
-
-  h4.innerText = `Lead: ${lead.name}`;
-
-  div.appendChild(h4);
-  leadDiv.appendChild(div);
 }
     
 function renderProject(project) {
@@ -241,12 +161,6 @@ function deleteProject(e) {
     })
     renderProjects();
   });
-}
-
-function renderLeadForm() {
-  resetMain();
-  main().innerHTML = leadFormTemplate();
-  leadForm().addEventListener("submit", submitLeadForm);
 }
 function renderPForm() {
   resetMain();
@@ -329,19 +243,6 @@ function submitPForm(e) {
     })
 
 }
-//lead links
-function leadLinkEvent() {
-  newLeadLink().addEventListener("click", function(e) {
-    e.preventDefault();
-    renderLeadForm();
-  })
-}
-function allLeadsLinkEvent() {
-  allLeads().addEventListener("click", function(e) {
-    e.preventDefault();
-    renderLeads();
-  })
-}
 
 //form links
 function formLinkEvent() {
@@ -360,10 +261,7 @@ function myProjectsLinkEvent() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  getLeads();
   getProjects();
-  leadLinkEvent();
-  allLeadsLinkEvent();
   formLinkEvent();
   myProjectsLinkEvent();
   // renderPForm();
