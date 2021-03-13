@@ -5,7 +5,8 @@ function getProjects() {
     return resp.json();
   })
   .then(function(data) {
-    projects = data
+    Project.createFromCollection(data)
+    Project.renderProjects();
   });
 }
 
@@ -56,48 +57,11 @@ function editFormTemplate(project) {
   `;
 }
 
-function projectsTemp() {
-  return `
-  <h3>Projects</h3>
-  <div id="projects">
-  </div>
-  `
-}
-    
-function renderProject(project) {
-  const projectsDiv = document.getElementById("projects");
-  const div = document.createElement("div");
-  const h4 = document.createElement("h4");
-  const p = document.createElement("p");
-  const leadName = document.createElement("p")
-  const deleteLink = document.createElement("a")
-  const editLink = document.createElement("a")
-
-  editLink.dataset.id = project.id
-  editLink.setAttribute("href", "#")
-  editLink.innerText = "Edit"
-  
-  deleteLink.dataset.id = project.id
-  deleteLink.setAttribute("href", "#")
-  deleteLink.innerText = "Delete"
-
-  editLink.addEventListener("click", editProject);
-  deleteLink.addEventListener("click", deleteProject);
-
-  h4.innerText = `Project Name: ${project.name}`;
-  leadName.innerText = `Team Lead: ${project.lead.name}`;
-  p.innerText = `Short description: ${project.description}`;
-
-  div.append(h4, leadName, p, editLink, deleteLink);
-  projectsDiv.appendChild(div);
-
-}
-
 function editProject(e) {
   e.preventDefault();
   const id = e.target.dataset.id;
 
-  const project = projects.find(function(project) {
+  const project = Project.all.find(function(project) {
     return project.id == id;
   })
 
@@ -117,10 +81,10 @@ function deleteProject(e) {
   })
   .then(function(data) {
 
-    projects = projects.filter(function(project) {
+    Project.all = Project.all.filter(function(project) {
       return project.id !== data.id;
     })
-    renderProjects();
+    Project.renderProjects();
   });
 }
 function renderPForm() {
@@ -158,22 +122,13 @@ function submitEditProjectForm(e) {
     return resp.json();
   })
   .then(function(project) {
-    let p = projects.find(function(p) {
+    let p = Project.all.find(function(p) {
       return p.id == project.id;
     })
-    let idx = projects.indexOf(p);
-    projects[idx] = project;
+    let idx = Project.all.indexOf(p);
+    Project.all[idx] = project;
     alert(`${project.name} was edited`)
-    renderProjects();
-  })
-}
-
-function renderProjects() {
-  // resetMain();
-  main().innerHTML = projectsTemp();
-
-  projects.forEach( function(project) {
-    renderProject(project)
+    Project.renderProjects();
   })
 }
 
@@ -199,8 +154,8 @@ function submitPForm(e) {
       return resp.json();
     })
     .then( function(project) {
-      projects.push(project)
-      renderProjects();
+      Project.all.push(project)
+      Project.renderProjects();
     })
 
 }
@@ -213,17 +168,17 @@ function formLinkEvent() {
     renderPForm();
   })
 }
-function myProjectsLinkEvent() {
+function projectsLinkEvent() {
   projectsLink().addEventListener("click", function(e) {
     e.preventDefault();
 
-    renderProjects();
+    Project.renderProjects();
   });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
   getProjects();
   formLinkEvent();
-  myProjectsLinkEvent();
+  projectsLinkEvent();
   // renderPForm();
 })

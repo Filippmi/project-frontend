@@ -1,5 +1,4 @@
-let projects = [];
-let leads = []
+
 const baseUrl = "http://localhost:3000"
 
 const main = () => document.getElementById("main");
