@@ -1,14 +1,4 @@
-// fetches to the backend
-function getProjects() {
-  fetch(baseUrl+'/projects')
-  .then(function(resp) {
-    return resp.json();
-  })
-  .then(function(data) {
-    Project.createFromCollection(data)
-    Project.renderProjects();
-  });
-}
+
 
 function resetFormInputs() {
   titleInput().value = "";
@@ -36,7 +26,7 @@ function projectsLinkEvent() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  getProjects();
+  Project.getProjects();
   formLinkEvent();
   projectsLinkEvent();
   // renderPForm();

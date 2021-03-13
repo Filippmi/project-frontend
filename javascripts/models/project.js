@@ -138,7 +138,7 @@ class Project{
         lead_attributes: leadNameInput().value
       }
     }
-    fetch(baseUrl+"/projects", {
+    fetch(Api.baseUrl+"/projects", {
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -166,7 +166,7 @@ class Project{
     }
     const id = e.target.dataset.id;
   
-    fetch(baseUrl + "/projects/" + id, {
+    fetch(Api.baseUrl + "/projects/" + id, {
       method: "PATCH",
       headers: {
         "Accept": "application/json",
@@ -193,7 +193,7 @@ class Project{
     
     let id = e.target.dataset.id;
   
-    fetch(baseUrl + "/projects/" + id, {
+    fetch(Api.baseUrl + "/projects/" + id, {
       method: "DELETE"
     })
     .then(function(resp) {
@@ -204,6 +204,17 @@ class Project{
       Project.all = Project.all.filter(function(project) {
         return project.id !== data.id;
       })
+      Project.renderProjects();
+    });
+  }
+
+  static getProjects() {
+    Api.get("/projects")
+    .then(function(resp) {
+      return resp.json();
+    })
+    .then(function(data) {
+      Project.createFromCollection(data)
       Project.renderProjects();
     });
   }

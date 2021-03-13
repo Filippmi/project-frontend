@@ -1,6 +1,3 @@
-
-const baseUrl = "http://localhost:3000"
-
 const main = () => document.getElementById("main");
 const nameInput = () => document.getElementById('name');
 const descriptionInput = () => document.getElementById('description');
