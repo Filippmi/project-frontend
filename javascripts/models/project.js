@@ -184,11 +184,12 @@ class Project{
     
     let id = e.target.dataset.id;
   
-    const data = await Api.delete(Api.baseUrl + "/projects/" + id)
+    const data = await Api.delete("/projects/" + id)
   
     Project.all = Project.all.filter(function(project) {
       return project.id !== data.id;
     })
+    debugger
     alert(`${Project.name} was Deleted`)
     Project.renderProjects();
   }
