@@ -184,10 +184,7 @@ class Project{
     
     let id = e.target.dataset.id;
   
-    const resp = await fetch(Api.baseUrl + "/projects/" + id, {
-      method: "DELETE"
-    })
-    const data = await resp.json();
+    const data = await Api.delete(Api.baseUrl + "/projects/" + id)
   
     Project.all = Project.all.filter(function(project) {
       return project.id !== data.id;
