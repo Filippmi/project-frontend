@@ -155,27 +155,19 @@ class Project{
       }
     }
     const id = e.target.dataset.id;
-  
-    fetch(Api.baseUrl + "/projects/" + id, {
-      method: "PATCH",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(strongParams)
-    })
-    .then(function(resp) {
-      return resp.json();
-    })
-    .then(function(data) {
-      let p = Project.all.find(function(p) {
-        return p.id == data.id;
+    
+    Api.patch("/projects/" + id, strongParams)
+      .then(function(data) {
+        // Selects the project from the projects array
+        let p = Project.all.find((p) => p.id == data.id);
+        //gets the index of the selected project
+        let idx = Project.all.indexOf(p);
+        //updates the selected index with the new project
+        Project.all[idx] = new Project(data);
+        alert(`${Project.name} was edited`)
+        //renders the projects and the updated project
+        Project.renderProjects();
       })
-      let idx = Project.all.indexOf(p);
-      Project.all[idx] = new Project(data);
-      alert(`${Project.name} was edited`)
-      Project.renderProjects();
-    })
   }
 
   static async getProjects() {
@@ -200,7 +192,7 @@ class Project{
     Project.all = Project.all.filter(function(project) {
       return project.id !== data.id;
     })
-
+    alert(`${Project.name} was Deleted`)
     Project.renderProjects();
   }
 }
