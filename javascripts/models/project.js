@@ -138,21 +138,11 @@ class Project{
         lead_attributes: leadNameInput().value
       }
     }
-    fetch(Api.baseUrl+"/projects", {
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(strongParams),
-      method: "POST"
-    })
-      .then( function(resp) {
-        return resp.json();
-      })
+    Api.post("/projects", strongParams)
       .then( function(data) {
         Project.create(data)
         Project.renderProjects();
-      })
+    })
   }
 
   static submitEditProjectForm(e) {
@@ -188,34 +178,29 @@ class Project{
     })
   }
 
-  static deleteProject(e) {
+  static async getProjects() {
+
+    const data = await Api.get("/projects");
+
+    Project.createFromCollection(data)
+    Project.renderProjects();
+  
+  }
+
+  static async deleteProject(e) {
     e.preventDefault();
     
     let id = e.target.dataset.id;
   
-    fetch(Api.baseUrl + "/projects/" + id, {
+    const resp = await fetch(Api.baseUrl + "/projects/" + id, {
       method: "DELETE"
     })
-    .then(function(resp) {
-      return resp.json();
-    })
-    .then(function(data) {
+    const data = await resp.json();
   
-      Project.all = Project.all.filter(function(project) {
-        return project.id !== data.id;
-      })
-      Project.renderProjects();
-    });
-  }
-
-  static getProjects() {
-    Api.get("/projects")
-    .then(function(resp) {
-      return resp.json();
+    Project.all = Project.all.filter(function(project) {
+      return project.id !== data.id;
     })
-    .then(function(data) {
-      Project.createFromCollection(data)
-      Project.renderProjects();
-    });
+
+    Project.renderProjects();
   }
 }
