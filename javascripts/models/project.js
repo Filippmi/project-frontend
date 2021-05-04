@@ -28,6 +28,7 @@ class Project{
     editLink.addEventListener("click", Project.editProject);
     deleteLink.addEventListener("click", Project.deleteProject);
   
+    div.classList.add('card')
     h4.innerText = `Project Name: ${this.name}`;
     leadName.innerText = `Team Lead: ${this.lead.name}`;
     p.innerText = `Short description: ${this.description}`;
@@ -82,17 +83,17 @@ class Project{
   static editFormTemplate(project) {
     return `
     <h3>Edit Project</h3>
-    <form id="project_form" data-id="${project.id}">
-    <div class="input-feild">
-    <label for="name">Project Name</label>
-    <input type="text" name="name" id="name" value="${project.name}"><br>
+    <div class="container">
+      <form id="project_form" data-id="${project.id}">
+      <div class="input-feild">
+        <input type="text" name="name" id="name" value="${project.name}"><br>
+      </div>
+      <div class="input-feild">
+        <input type="text" name="description" id="description" value="${project.description}">
+      </div>
+        <input type="submit" value="Edit">
+      </form>
     </div>
-    <div class="input-feild">
-    <label for="description">Description</label><br>
-    <textarea name="description" id="description" cols="30" rows="5">${project.description}</textarea>
-    </div>
-    <input type="submit" value="Edit">
-    </form>
     `;
   }
 
@@ -163,7 +164,6 @@ class Project{
         let idx = Project.all.indexOf(p);
         //updates the selected index with the new project
         Project.all[idx] = new Project(data);
-        alert(`${Project.name} was edited`)
         //renders the projects and the updated project
         Project.renderProjects();
       })
@@ -179,17 +179,17 @@ class Project{
   }
 
   static async deleteProject(e) {
-    e.preventDefault();
+    if (confirm("Are you sure you want to delete this project?")) {
+      e.preventDefault();
     
-    let id = e.target.dataset.id;
+      let id = e.target.dataset.id;
   
-    const data = await Api.delete("/projects/" + id)
+      const data = await Api.delete("/projects/" + id)
   
-    Project.all = Project.all.filter(function(project) {
-      return project.id !== data.id;
-    })
-    debugger
-    alert(`${Project.name} was Deleted`)
-    Project.renderProjects();
+      Project.all = Project.all.filter(function(project) {
+        return project.id !== data.id;
+      })
+      Project.renderProjects();
+    }
   }
 }
