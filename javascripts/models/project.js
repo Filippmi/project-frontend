@@ -62,21 +62,23 @@ class Project{
   static projectFormTemplate() {
     return `
     <h3>Create Project</h3>
-    <form id="project_form">
-      <div class="input-feild">
-        <label for="name">Project Name</label>
-        <input type="text" name="name" id="name"><br>
-      </div>
-      <div class="input-feild">
-        <label for="lead-name">Team Lead </label>
-        <input type="text" name="lead-name" id="lead-name"><br>
-      </div>
-      <div class="input-feild">
-        <label for="description">Project Description</label><br>
-        <textarea name="description" id="description" cols="30" rows="5"></textarea>
-      </div>
-      <input type="submit" value="Create Project">
-    </form>
+    <div class="container">
+      <form id="project_form">
+        <div class="project-name">
+          <label for="name">Project Name</label>
+          <input type="text" name="name" id="name"><br>
+        </div>
+        <div class="input-feild">
+          <label for="lead-name">Team Lead </label>
+          <input type="text" name="lead-name" id="lead-name"><br>
+        </div>
+        <div class="input-feild">
+          <label for="description">Project Description</label><br>
+          <textarea name="description" id="description" cols="30" rows="5"></textarea>
+        </div>
+        <input type="submit" value="Create Project">
+      </form>
+    </div>
     `;
   }
 
