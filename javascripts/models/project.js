@@ -65,16 +65,13 @@ class Project{
     <div class="container">
       <form id="project_form">
         <div class="project-name">
-          <label for="name">Project Name</label>
-          <input type="text" name="name" id="name"><br>
+          <input type="text" name="name" id="name" placeholder="Project Name...">
         </div>
         <div class="input-feild">
-          <label for="lead-name">Team Lead </label>
-          <input type="text" name="lead-name" id="lead-name"><br>
+          <input type="text" name="lead-name" id="lead-name" placeholder="Lead Name...">
         </div>
         <div class="input-feild">
-          <label for="description">Project Description</label><br>
-          <textarea name="description" id="description" cols="30" rows="5"></textarea>
+          <input type="text" name="description" id="description" placeholder="Description...">
         </div>
         <input type="submit" value="Create Project">
       </form>
