@@ -10,6 +10,7 @@ class Project{
 
   render() {
     const projectsDiv = document.getElementById("projects");
+    const card = document.createElement("div");
     const div = document.createElement("div");
     const h4 = document.createElement("h4");
     const p = document.createElement("p");
@@ -28,14 +29,15 @@ class Project{
     editLink.addEventListener("click", Project.editProject);
     deleteLink.addEventListener("click", Project.deleteProject);
   
-    div.classList.add('card')
+    card.classList.add('card', 'row')
+    div.classList.add('column')
     h4.innerText = `Project Name: ${this.name}`;
     leadName.innerText = `Team Lead: ${this.lead.name}`;
     p.innerText = `Short description: ${this.description}`;
   
-    div.append(h4, leadName, p, editLink, deleteLink);
-    projectsDiv.appendChild(div);
-  
+    card.append(h4, leadName, p, editLink, deleteLink);
+    div.appendChild(card)
+    projectsDiv.appendChild(div)
   }
   
   save() {
