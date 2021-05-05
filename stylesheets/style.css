@@ -45,11 +45,6 @@
   color: #f1f1f1;
 }
 
-.home {
-  transition: margin-left .5s; /* If you want a transition effect */
-  padding: 20px;
-}
-
 .nav__link {
   display: block;
   padding: 12px 18px;
