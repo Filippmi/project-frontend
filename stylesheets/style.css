@@ -11,6 +11,10 @@
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
+.openNav:hover {
+  background-color: #444;
+}
+
 .openNav {
   font-size: 20px;
   cursor: pointer;
@@ -39,6 +43,11 @@
 
 .sidenav a:hover {
   color: #f1f1f1;
+}
+
+.home {
+  transition: margin-left .5s; /* If you want a transition effect */
+  padding: 20px;
 }
 
 .nav__link {
